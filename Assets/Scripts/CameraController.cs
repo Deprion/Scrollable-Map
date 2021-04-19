@@ -2,6 +2,8 @@
 
 public class CameraController : MonoBehaviour
 {
+    public GameObject prefab;
+
     [SerializeField]
     private Camera cam;
     [SerializeField]
@@ -11,11 +13,16 @@ public class CameraController : MonoBehaviour
 
     private Vector3 originPos;
 
-    public GameObject prefab;
+    private float heightBlock, widthBlockLast, widthBlockFirst;
 
     void Awake()
     {
         cam = cam ? cam : Camera.main;
+
+        widthBlockFirst = MapManager.s_Instance.mapContainer.List[0].Width;
+        widthBlockLast = MapManager.s_Instance.mapContainer.List
+            [MapManager.s_Instance.mapContainer.List.Count - 1].Width;
+        heightBlock = MapManager.s_Instance.mapContainer.List[0].Height;
     }
     void Update()
     {
@@ -50,15 +57,13 @@ public class CameraController : MonoBehaviour
         float camHeight = cam.orthographicSize;
         float camWidth = cam.orthographicSize * cam.aspect;
 
-        float minX = camWidth - MapManager.s_Instance.mapContainer.List[0].Width / 2f;
+        float minX = camWidth - widthBlockFirst / 2f;
 
-        float maxX = MapManager.s_Instance.BorderX - camWidth + 
-            MapManager.s_Instance.mapContainer.List[MapManager.s_Instance.mapContainer.List.Count - 1].Width/2f;
+        float maxX = MapManager.s_Instance.BorderX - camWidth + widthBlockLast / 2f;
 
-        float minY = MapManager.s_Instance.BorderY + camHeight - 
-            MapManager.s_Instance.mapContainer.List[0].Height / 2f;
+        float minY = MapManager.s_Instance.BorderY + camHeight - heightBlock / 2f;
 
-        float maxY = -camHeight + MapManager.s_Instance.mapContainer.List[0].Height / 2f;
+        float maxY = -camHeight + heightBlock / 2f;
 
         float endX = Mathf.Clamp(target.x, minX, maxX);
 

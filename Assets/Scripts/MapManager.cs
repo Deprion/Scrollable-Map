@@ -3,15 +3,16 @@ using UnityEngine.U2D;
 
 public class MapManager : MonoBehaviour
 {
+    public MapContainer mapContainer;
+    public float BorderX, BorderY;
+    public static MapManager s_Instance;
+
     [SerializeField]
     private SpriteAtlas mapAtlas;
     [SerializeField]
     private GameObject mapPrefab, mapParent;
     private float ExtraWidth = 1.91f;
 
-    public MapContainer mapContainer;
-    public float BorderX, BorderY;
-    public static MapManager s_Instance;
     private void Awake()
     {
         if (s_Instance != null) Destroy(this);
