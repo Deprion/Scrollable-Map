@@ -50,17 +50,19 @@ public class CameraController : MonoBehaviour
         float camHeight = cam.orthographicSize;
         float camWidth = cam.orthographicSize * cam.aspect;
 
-        float maxX = MapManager.s_Instance.BorderX - camWidth;
-        float minY = MapManager.s_Instance.BorderY + camHeight/2;
-        
-        float endX;
+        float minX = camWidth - MapManager.s_Instance.mapContainer.List[0].Width / 2f;
 
-        // Не знаю как фиксить выход за рамки при высоком aspect, кроме как магическими цифрами
+        float maxX = MapManager.s_Instance.BorderX - camWidth + 
+            MapManager.s_Instance.mapContainer.List[MapManager.s_Instance.mapContainer.List.Count - 1].Width/2f;
 
-        if (cam.aspect >= 2) endX = Mathf.Clamp(target.x, camWidth / 2 + 2.6f, maxX);
-        else endX = Mathf.Clamp(target.x, camWidth / 2 + 1.91f, maxX);
+        float minY = MapManager.s_Instance.BorderY + camHeight - 
+            MapManager.s_Instance.mapContainer.List[0].Height / 2f;
 
-        float endY = Mathf.Clamp(target.y, minY, -camHeight/2);
+        float maxY = -camHeight + MapManager.s_Instance.mapContainer.List[0].Height / 2f;
+
+        float endX = Mathf.Clamp(target.x, minX, maxX);
+
+        float endY = Mathf.Clamp(target.y, minY, maxY);
 
         return new Vector3(endX, endY, target.z);
     }

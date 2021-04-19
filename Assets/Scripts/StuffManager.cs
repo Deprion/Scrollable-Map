@@ -18,8 +18,7 @@ public class StuffManager : MonoBehaviour
         {
             float posX = cam.transform.position.x - cam.orthographicSize * cam.aspect;
             float posY = cam.transform.position.y + cam.orthographicSize;
-            print("x: " + posX);
-            print("y: " + posY);
+
             if (mp.X - 2.56f <= posX && mp.X + 2.56f >= posX &&
                 mp.Y - 2.56f <= posY && mp.Y + 2.56f >= posY)
             {
